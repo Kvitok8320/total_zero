@@ -1,4 +1,5 @@
 from django.db import models
+from total.register.models import User
 
 # Create your models here.
 class Product(models.Model):

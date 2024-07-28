@@ -1,6 +1,6 @@
 from django.db import models
-from total.register.models import User
-from total.catalog.models import Product
+from register.models import User
+from catalog.models import Product
 
 # Create your models here.
 

@@ -17,5 +17,6 @@ def create_order(request):
             order_form = OrderForm()
             order_item_formset = OrderItemForm()
 
-        return render(request, 'create_order.html',
+        return render(request, 'order/create_order.html',
                       {'order_form': order_form, 'order_item_formset': order_item_formset})
+    return render(request, 'order/create_order.html')

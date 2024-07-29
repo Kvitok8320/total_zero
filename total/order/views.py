@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from .models import Order, OrderItem
 from .forms import OrderForm, OrderItemForm
 
@@ -20,3 +20,6 @@ def create_order(request):
         return render(request, 'order/create_order.html',
                       {'order_form': order_form, 'order_item_formset': order_item_formset})
     return render(request, 'order/create_order.html')
+
+def order_success(request):
+    return HttpResponse('<h2> Вы успешно создали заказ! </h2>')

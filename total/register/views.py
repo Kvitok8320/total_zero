@@ -29,3 +29,13 @@ def user_login(request):
     else:
         form = UserLoginForm()
     return render(request, 'register/login.html', {'form': form})
+
+def profile_view(request):
+    return render(request, 'register/profile.html')
+
+def login_view(request):
+    return render(request, 'register/login.html')
+
+def logout_view(request):
+    # Логика выхода пользователя
+    return render(request, 'register/login.html')

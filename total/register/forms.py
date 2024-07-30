@@ -1,13 +1,12 @@
 from django import forms
 from .models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-class UserRegistrationForm(forms.ModelForm):
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
-
+class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['name', 'email', 'tgnic']
+        fields = ('email', 'name', 'tgnic', 'password1', 'password2')
+
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
@@ -22,3 +21,6 @@ class UserRegistrationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.EmailField(label='Email')

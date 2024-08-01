@@ -39,3 +39,6 @@ def login_view(request):
 def logout_view(request):
     # Логика выхода пользователя
     return render(request, 'register/login.html')
+
+def index_view(request):
+    return render(request, 'register/index.html')

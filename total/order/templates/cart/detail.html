@@ -1,0 +1,29 @@
+{% extends 'register/base.html'%}
+
+{% block title %}
+<title>Корзина</title>
+{% endblock %}
+
+{% block content %}
+
+<h1>Корзина</h1>
+    <ul>
+        {% for item in cart %}
+            <li>
+                {{ item.product.name }} - {{ item.price }} руб. x {{ item.quantity }}
+                <form action="{% url 'cart_remove' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Удалить</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <p>Общая стоимость: {{ cart.get_total_price }} руб.</p>
+    <form action="{% url 'order_create' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Оформить заказ</button>
+    </form>
+    <a href="{% url 'index' %}">Вернуться к каталогу</a>
+
+
+{% endblock %}

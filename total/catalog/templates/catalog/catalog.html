@@ -6,7 +6,17 @@
 
 {% block content %}
     <h2>Каталог товаров</h2>
-
+{% for product in products %}
+    <div>
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p>Цена: {{ product.price }}</p>
+        <p>В наличии: {{ product.stock }}</p>
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% endif %}
+    </div>
+{% endfor %}
 
 
 {% endblock %}

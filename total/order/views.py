@@ -1,7 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponse
 from .models import Order, OrderItem
 from .forms import OrderForm, OrderItemForm
-
+@login_required
 def create_order(request):
     if request.method == 'POST':
         order_form = OrderForm(request.POST)

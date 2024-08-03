@@ -2,21 +2,30 @@
 
 {% block title %}
 <title>Catalog</title>
+
 {% endblock %}
 
 {% block content %}
     <h2>Каталог товаров</h2>
-{% for product in products %}
-    <div>
-        <h2>{{ product.name }}</h2>
-        <p>{{ product.description }}</p>
-        <p>Цена: {{ product.price }}</p>
-        <p>В наличии: {{ product.stock }}</p>
-        {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-        {% endif %}
+    <div class="container mt-4">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-image">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                            <p class="card-text">Цена: {{ product.price }}</p>
+                            <p class="card-text">В наличии: {{ product.stock }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-{% endfor %}
-
-
 {% endblock %}

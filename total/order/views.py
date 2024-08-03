@@ -55,3 +55,24 @@ def create_order(request):
 
 def order_success(request):
     return HttpResponse('<h2> Вы успешно создали заказ! </h2>')
+
+@require_POST
+def update_cart_item(request, product_id):
+    cart = Cart.objects.get(user=request.user)
+    product = Product.objects.get(id=product_id)
+    quantity = int(request.POST.get('quantity', 1))
+    action = request.POST.get('action')
+
+    if action == 'increase':
+        quantity += 1
+    elif action == 'decrease':
+        quantity -= 1
+
+    cart.update_item(product, quantity)
+    return redirect('cart')
+
+def decrement_view(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart = Cart(request)
+    cart.decrement(product)
+    return redirect('cart_detail')

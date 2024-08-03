@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
+from order.models import Order
+
 
 def register(request):
     if request.method == 'POST':
@@ -37,7 +39,8 @@ def user_login(request):
 
 @login_required
 def profile_view(request):
-    return render(request, 'register/profile.html')
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'register/profile.html', {'orders': orders})
 
 def login_view(request):
     return render(request, 'register/login.html')

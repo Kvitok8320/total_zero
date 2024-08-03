@@ -1,31 +1,31 @@
 {% extends 'register/base.html'%}
 
 {% block title %}
-<title>Личный кабинет</title>
+<title>Заказы пользователя {{user.name}}</title>
 {% endblock %}
 
 {% block content %}
-    <h1>Это личный кабинет покупателя {{user.name}}!</h1>
- {% for order in orders %}
-                <div class="col-md-4 mb-4 d-flex align-items-stretch">
-                    <div class="card">
-                        <div class="card-image">
-                            {% if product.image %}
-                                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                            {% endif %}
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text">{{ product.description }}</p>
-                            <p class="card-text">Цена: {{ product.price }}</p>
-                            <p class="card-text">В наличии: {{ product.stock }}</p>
-                            <div class="mt-auto">
-                                <p class="card-text">Footer content or action buttons</p>
-                            </div>
-                        </div>
-                    </div>
+<div class="container">
+    <h2>Ваши заказы</h2>
+    <div class="accordion" id="ordersAccordion">
+        {% for order in orders %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ order.id }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ order.id }}" aria-expanded="false" aria-controls="collapse{{ order.id }}">
+                    Заказ {{ order.id }} - {{ order.created_at }} - Сумма: {{ order.total_amount }} руб.
+                </button>
+            </h2>
+            <div id="collapse{{ order.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ order.id }}" data-bs-parent="#ordersAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        {% for item in order.orderitem_set.all %}
+                        <li>{{ item.product.name }} x {{ item.quantity }} - {{ item.total_price }} руб.</li>
+                        {% endfor %}
+                    </ul>
                 </div>
-            {% endfor %}
+            </div>
         </div>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}

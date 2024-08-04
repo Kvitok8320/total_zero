@@ -4,6 +4,7 @@ from .models import Order, OrderItem
 from .forms import OrderForm, OrderItemForm, Product
 from django.views.decorators.http import require_POST
 from .cart import Cart
+from order.telegram_bot import notify_telegram
 
 @require_POST
 def cart_add(request, product_id):
@@ -27,8 +28,12 @@ def order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
         order = Order.objects.create(user=request.user)
+        position = "состав заказа: "
         for item in cart:
             OrderItem.objects.create(order=order, product=item['product'], quantity=item['quantity'])
+            position = position + str(item['product']) + "-"+str(item['quantity'])+" шт.; "
+        message = f'Новый заказ сформирован: {order}; {position}'
+        notify_telegram(message)
         cart.clear()
         return render(request, 'cart/order_created.html', {'order': order})
     return redirect('cart_detail')

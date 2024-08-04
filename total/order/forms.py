@@ -6,7 +6,7 @@ from catalog.models import Product
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['user']
+        fields = ['user', 'address']
 
 class OrderItemForm(forms.ModelForm):
     product = forms.ModelChoiceField(queryset=Product.objects.all())

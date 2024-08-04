@@ -20,18 +20,20 @@ def cart_remove(request, product_id):
     cart.remove(product)
     return redirect('cart_detail')
 
+
 def cart_detail(request):
     cart = Cart(request)
     return render(request, 'cart/detail.html', {'cart': cart})
-
+@login_required
 def order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
+        address = request.POST.get('address')
         order = Order.objects.create(user=request.user)
         position = "состав заказа: "
         for item in cart:
             OrderItem.objects.create(order=order, product=item['product'], quantity=item['quantity'])
-            position = position + str(item['product']) + "-"+str(item['quantity'])+" шт.; "
+            position = position + str(item['product']) + "-"+str(item['quantity'])+" шт.; адрес доставки:" + str(address)
         message = f'Новый заказ сформирован: {order}; {position}'
         notify_telegram(message)
         cart.clear()

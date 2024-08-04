@@ -10,7 +10,7 @@
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'create_order' %}">Сделать заказ</a>
+                <a class="nav-link" href="{% url 'cart_detail' %}">Корзина</a>
             </li>
             {% endif %}
             {% if user.is_authenticated %}
